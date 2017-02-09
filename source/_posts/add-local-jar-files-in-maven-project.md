@@ -1,5 +1,6 @@
 ---
 title: springmvc项目中，通过maven使用本地jar包
+date: 2017-01-18
 ---
 ## 起因
 项目所有的jar包都使用maven repository私服，所以如果有新的第三方包，就需要先上传上去私服才能使用，但是需要
