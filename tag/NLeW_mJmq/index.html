@@ -1,127 +1,145 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
- <head>
-    <meta charset="utf-8" />
-  <title>Java | Hex&#39;s Blog</title>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-  <link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
- </head>
- <body>
-     <div class="sidebar animated fadeInDown">
-   <div class="logo-title">
-    <div class="title">
-     <img src="https://hexzhou.github.io//images/avatar.png?v=1568104661223" style="width:127px;" />
+<html>
+  <head>
+    <meta charset="utf-8" >
 
-     <h3 title=""><a href="/">Hex</a></h3>
+<title>Java | Hex&#39;s Blog</title>
+<meta name="description" content="博学深思，明辨笃行">
 
-     <div class="description">
-      <p>博学深思，明辨笃行</p>
-     </div>
-    </div>
-   </div>
-   <ul class="social-links">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1568104734105">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css">
 
 
-    
 
-    
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-    
-
-    <li><a href="https://github.com/hexzhou"><i class="fa fa-github"></i></a></li>
- 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-   </ul>
-   <div class="footer">
-    <div class="by_farbox">
-   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-    </div>
-    
-
-    </div>
-   </div>
-  </div>
-  <div class="main">
-      <div class="page-top animated fadeInDown">
-    <div class="nav">
-
-     <li><a  href="/">首页</a></li>
-
-     <li><a  href="/archives">归档</a></li>
-
-     <li><a  href="/tags">标签</a></li>
-
-     <li><a  href="/post/about">关于</a></li>
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
-    </div>
-    <div class="information">
-     <div class="back_btn">
-      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)" style="display:none;"> </a></li>
-     </div>
-    </div>
-   </div>
-   <div class="autopagerize_page_element">
-    <div class="content">
-              
-     <div class="post animated fadeInDown">
-      <div class="post-title">
-       <h3><a href="https://hexzhou.github.io//post/add-local-jar-files-in-maven-project">springmvc项目中，通过maven使用本地jar包</a></h3>
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hexzhou.github.io/">
+        <img src="https://hexzhou.github.io//images/avatar.png?v=1568104734105" class="site-logo">
+        <h1 class="site-title">Hex&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
       </div>
-      <div class="post-content">
-       <p><h2 id="起因">起因</h2>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      博学深思，明辨笃行
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://hexzhou.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <h2 class="current-tag">标签: Java</h2>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hexzhou.github.io//post/add-local-jar-files-in-maven-project">
+                  <h2 class="post-title">springmvc项目中，通过maven使用本地jar包</h2>
+                </a>
+                <div class="post-date">
+                  2017-01-18
+                </div>
+                <div class="post-abstract">
+                  <h2 id="起因">起因</h2>
 <p>项目所有的jar包都使用maven repository私服，所以如果有新的第三方包，就需要先上传上去私服才能使用，但是需要<br>
 一些时间。可是开发进度不等人，所以要想办法直接在项目中使用第三方包。</p>
-</p>
-      </div>
-      <div class="post-footer">
-       <div class="meta">
-        <div class="info">
-         <i class="fa fa-sun-o"></i>
-         <span class="date">2017-01-18</span>
-         <i class="fa fa-tag"></i>
-         
-         <a class="tag" href="https://hexzhou.github.io//tag/NLeW_mJmq" title="Java">Java </a>
-         
-         <a class="tag" href="https://hexzhou.github.io//tag/RFppuZvZeu" title="Maven">Maven </a>
-         
-         <a class="tag" href="https://hexzhou.github.io//tag/YSY7ehwnJL" title="Spring">Spring </a>
-         
+
+                </div>
+              </div>
+              
+            </article>
+          
+
+          <div class="pagination-container">
+  
+  
+</div>
+
         </div>
-       </div>
       </div>
-     </div>
-     
-     <div class="pagination">
-      <ul class="clearfix">
-            
-        
-
-      </ul>
-     </div>
     </div>
-   </div>
-  </div>
-  <script src="https://hexzhou.github.io//media/scripts/jquery.js"></script>
-  <script src="https://hexzhou.github.io//media/scripts/jquery-migrate-1.2.1.min.js"></script>
-  <script src="https://hexzhou.github.io//media/scripts/jquery.appear.js"></script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
 
 
- </body>
+
+
+  </body>
 </html>
