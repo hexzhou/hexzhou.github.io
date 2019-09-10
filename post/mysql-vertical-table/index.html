@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>MySQL中纵表的运用 | Hex&#39;s Blog</title>
+<meta name="description" content="博学深思，明辨笃行">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1568111497649">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hexzhou.github.io/">
+        <img src="https://hexzhou.github.io//images/avatar.png?v=1568111497649" class="site-logo">
+        <h1 class="site-title">Hex&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      博学深思，明辨笃行
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://hexzhou.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">MySQL中纵表的运用</h2>
+            <div class="post-date">2019-09-10</div>
+            
+            <div class="post-content">
+              <h3 id="起因">起因</h3>
+<p>因为需求的迭代，用户表每过一段时间就需要添加一些字段。但是用户表数据量较大且在业务时间更新十分频繁。在业务频繁的时候，如果执行Alter Table这些DDL语句，可能会导致出现大量的waitting for table metadata lock锁住表，继而导致用户数据读写受到影响、服务不可用。<br>
+那么如何解决这种时不时要给用户添加新字段的情况呢。我们可以考虑使用纵表。</p>
+ <!-- more --> 
+<h3 id="什么是纵表">什么是纵表</h3>
+<p>横表是我们最经常使用的建表方式，既结构为<code>主键、字段1、字段2、字段3。。。</code>。而纵表呢，其结构为<code>主键、字段代码、字段值</code>。<br>
+举个例子，学生和考试科目的关系。<br>
+正常的横表建表方式应该是</p>
+<table>
+<thead>
+<tr>
+<th>学生名称</th>
+<th>语文</th>
+<th>数学</th>
+<th>英语</th>
+<th>生物</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+<td>...</td>
+</tr>
+<tr>
+<td>B</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+<td>90</td>
+<td>...</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>优点：一行表示了一个实体记录，清晰可见，一目了然。<br>
+缺点：如果现在要把这个表加一个字段，那么就必须重建表结构。</p>
+<p>而使用纵表的建表方式，则为</p>
+<table>
+<thead>
+<tr>
+<th>学生名称</th>
+<th>科目</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>语文</td>
+<td>90</td>
+</tr>
+<tr>
+<td>A</td>
+<td>数学</td>
+<td>90</td>
+</tr>
+<tr>
+<td>A</td>
+<td>英语</td>
+<td>90</td>
+</tr>
+<tr>
+<td>A</td>
+<td>生物</td>
+<td>90</td>
+</tr>
+<tr>
+<td>A</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>优点：如果现在要把这个表加一个字段，只需要添加一些记录。<br>
+缺点：数据描述不是很清晰，而且会造成数据库数据很多（这个时候，最好将数据表分表处理来缓解数据膨胀）。</p>
+<h3 id="应用">应用</h3>
+<p>回到最开始的问题，我们需要解决给用户增加属性字段的问题。那么我们可以想到，大概结构为&quot;用户ID，字段，属性值&quot;。具体SQL语句如下：</p>
+<pre><code>CREATE TABLE `user_extra` (
+  `user_id` bigint(20) NOT NULL,
+  `field` varchar(50) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`,`field`),
+  KEY `idx_field_value` (`field`,`value`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户特定信息详情表';
+</code></pre>
+<p>特别点：</p>
+<ol>
+<li>我们定义主键时，使用<code>userId</code>和<code>field</code>，这样子一来能加快通过<code>userId</code>和<code>field</code>查询<code>value</code>的速度，二来保证<code>userId</code>和<code>field</code>的关系唯一。</li>
+<li>我们加了一个<code>create_time</code>用于标识字段属性创建的时间，在需要查询某个用户设定该字段是什么时候时能起到作用</li>
+<li>为什么还需要<code>field</code>和<code>value</code>值的索引呢？一个很实际的场景：查询具有某个属性=某个值的所有用户(<code>select user_id where field='xxx' and value='xxx'</code>)。这种情况下，就需要<code>idx_field_value</code>来加快查询速度</li>
+<li>对于该表，还能进行一个优化，就是将<code>field</code>字段设定成<code>int</code>类型，然后使用一个字典来保存field字段的可能值。<br>
+比如上面学生考试科目的场景，可以将科目存储为<code>{1: &quot;语文&quot;, 2:&quot;数学&quot;, 3: &quot;英语&quot;}</code>, 每条记录就变成</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>学生名称</th>
+<th>科目</th>
+<th>分数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+<p>这样子，虽然可读性有所下降，但是存储所占用的空间就会减少，且理论上，查询匹配速度更快一点。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hexzhou.github.io//post/python-exec-cmd-over-ssh">
+                  <h3 class="post-title">
+                    使用Python批量SSH登录服务器执行命令
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'a29dc369b12257a0236b',
+        clientSecret: '886823b551c61d8d08f7005e454967ba36b64421',
+        repo: 'hexzhou.github.io',
+        owner: 'hexzhou',
+        admin: ['hexzhou'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

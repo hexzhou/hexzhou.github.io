@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1568104734105">
+<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1568111497649">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://hexzhou.github.io/">
-        <img src="https://hexzhou.github.io//images/avatar.png?v=1568104734105" class="site-logo">
+        <img src="https://hexzhou.github.io//images/avatar.png?v=1568111497649" class="site-logo">
         <h1 class="site-title">Hex&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -91,6 +91,24 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://hexzhou.github.io//post/mysql-vertical-table">
+                  <h2 class="post-title">MySQL中纵表的运用</h2>
+                </a>
+                <div class="post-date">
+                  2019-09-10
+                </div>
+                <div class="post-abstract">
+                  <h3 id="起因">起因</h3>
+<p>因为需求的迭代，用户表每过一段时间就需要添加一些字段。但是用户表数据量较大且在业务时间更新十分频繁。在业务频繁的时候，如果执行Alter Table这些DDL语句，可能会导致出现大量的waitting for table metadata lock锁住表，继而导致用户数据读写受到影响、服务不可用。<br>
+那么如何解决这种时不时要给用户添加新字段的情况呢。我们可以考虑使用纵表。</p>
+
+                </div>
+              </div>
+              
+            </article>
           
             <article class="post-item">
               <div class="left">
