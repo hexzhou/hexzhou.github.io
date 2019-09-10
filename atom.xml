@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://hexzhou.github.io/</id>
+    <title>Hex&apos;s Blog</title>
+    <updated>2019-09-10T08:33:22.459Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://hexzhou.github.io/"/>
+    <link rel="self" href="https://hexzhou.github.io//atom.xml"/>
+    <subtitle>博学深思，明辨笃行</subtitle>
+    <logo>https://hexzhou.github.io//images/avatar.png</logo>
+    <icon>https://hexzhou.github.io//favicon.ico</icon>
+    <rights>All rights reserved 2019, Hex&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[使用Python批量SSH登录服务器执行命令]]></title>
+        <id>https://hexzhou.github.io//post/python-exec-cmd-over-ssh</id>
+        <link href="https://hexzhou.github.io//post/python-exec-cmd-over-ssh">
+        </link>
+        <updated>2019-07-16T08:00:59.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="目的">目的</h3>
+<p>有多台服务器运行着实例代码，需要登录上去抓取指定日志，然后进行分析。如果一台一台机器登录拿日志处理太过费时间，所以要写一个脚本来处理。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="目的">目的</h3>
+<p>有多台服务器运行着实例代码，需要登录上去抓取指定日志，然后进行分析。如果一台一台机器登录拿日志处理太过费时间，所以要写一个脚本来处理。</p>
+ <!-- more --> 
+<h3 id="paramiko模块">Paramiko模块</h3>
+<p>paramiko是用python语言写的一个模块，遵循SSH2协议，支持以加密和认证的方式，进行远程服务器的连接。paramiko支持Linux, Solaris, BSD, MacOS X, Windows等平台通过SSH从一个平台连接到另外一个平台。利用该模块，可以方便的进行ssh连接和sftp协议进行sftp文件传输。</p>
+<pre><code>
+// 安装
+pip install paramiko 
+</code></pre>
+<h3 id="示例代码">示例代码</h3>
+<pre><code>
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+
+import paramiko
+
+# 登录服务器，并执行代码
+def sshclient_execmd(hostname, port, username, key, execmd):
+	# paramiko 的操作日志，方便排查问题
+	paramiko.util.log_to_file(&quot;paramiko.log&quot;)
+
+	# 创建SSHClient
+	s = paramiko.SSHClient()
+	s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+	# 这里是使用 rsa 登录的方式要传一个 privateKey进来
+	# 通过key = paramiko.RSAKey.from_private_key_file(pkey)
+	# 也可以使用账号密码的登录方式
+	s.connect(hostname=hostname, port=port, username=username, pkey=key)
+
+	#`执行命令得到输出
+	stdin, stdout, stderr = s.exec_command(execmd)
+
+	# 有些时候可能需要输入Y确定操作
+	# stdin.write(&quot;Y&quot;)  # Generally speaking, the first connection, need a simple interaction.
+
+	## 读取输出
+	output = stdout.read()
+
+	### 操作完毕需要关闭client
+	s.close()
+
+	return output
+
+	# 这里是根据输出做统计分析的代码
+def statics(output):
+	pass
+
+def main():
+	# 服务器相关的SSH信息
+	hostnames = ['xxx', 'xxx', 'xxx']
+	port = 22
+	username = 'username'
+
+	# 通过RSA PrivateKey文件读取Key
+	pkey = 'D:/id_rsa'
+	key = paramiko.RSAKey.from_private_key_file(pkey)
+    
+	# 要执行的命令
+	execmd = &quot;&quot;&quot;free -h&quot;&quot;&quot;
+	output = &quot;&quot;
+	for hostname in hostnames:
+			output += sshclient_execmd(hostname, port, username, key, execmd).
+	# 将输出做分析处理
+	statics(output)
+
+if __name__ == &quot;__main__&quot;:
+	main()
+</code></pre>
+<h2 id="其他工具-polysh">其他工具 Polysh</h2>
+<p><a href="http://guichaz.free.fr/polysh/">Polysh</a> 可以同时登陆多台服务器，然后批量执行命令</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[springmvc项目中，通过maven使用本地jar包]]></title>
+        <id>https://hexzhou.github.io//post/add-local-jar-files-in-maven-project</id>
+        <link href="https://hexzhou.github.io//post/add-local-jar-files-in-maven-project">
+        </link>
+        <updated>2017-01-18T08:13:48.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="起因">起因</h2>
+<p>项目所有的jar包都使用maven repository私服，所以如果有新的第三方包，就需要先上传上去私服才能使用，但是需要<br>
+一些时间。可是开发进度不等人，所以要想办法直接在项目中使用第三方包。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="起因">起因</h2>
+<p>项目所有的jar包都使用maven repository私服，所以如果有新的第三方包，就需要先上传上去私服才能使用，但是需要<br>
+一些时间。可是开发进度不等人，所以要想办法直接在项目中使用第三方包。</p>
+<!-- more -->
+<h2 id="解决办法一">解决办法一</h2>
+<p>在pom.xml文件中添加</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.yourgroup&lt;/groupId&gt;
+    &lt;artifactId&gt;yourartifactId&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;scope&gt;system&lt;/scope&gt;
+    &lt;systemPath&gt;${project.basedir}/lib/xxx.jar&lt;/systemPath&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>其中groupId、artifactId和version对应的值都可以随便填写，然后systemPath填写jar对应的路径</p>
+<pre><code>${project.basedir}/lib/xxx.jar
+对应的文件目录架构如下
+- |project
+-- |src
+--- |main
+-- |lib
+--- | xxx.jar
+</code></pre>
+<p>添加了这个依赖之后，intelliJ 就可以在开发的时候，索引到依赖。<br>
+可是，当运行项目和用maven进行打包时，无法将该jar包打到项目内，导致无法找到对应的类。<br>
+解决办法是在pom.xml中加入</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.6&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;warName&gt;${project.artifactId}&lt;/warName&gt;
+        &lt;webResources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;/lib&lt;/directory&gt;
+                &lt;targetPath&gt;WEB-INF/lib&lt;/targetPath&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.jar&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/resource&gt;
+         &lt;/webResources&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+<p>意思是增加一个maven打包的插件，把/lib目录下的jar文件都进行打包。</p>
+<h2 id="解决办法二">解决办法二</h2>
+<p>可以把jar包放到<code>src/main/java/webapp/WEB-INF/lib/</code>下，然后在pom.xml中加入</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.yourgroup&lt;/groupId&gt;
+    &lt;artifactId&gt;yourartifactId&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;scope&gt;system&lt;/scope&gt;
+    &lt;systemPath&gt;${project.basedir}/src/main/webapp/WEB-INF/lib/xxx.jar&lt;/systemPath&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>这样子，就可以不需要像方法一一样加入maven打包插件了</p>
+<h2 id="后记">后记</h2>
+<p>其实在pom.xml声明system级别的scope是十分不推荐的行为，是evil的。</p>
+<blockquote>
+<p>System scope was only designed to deal with 'system' files; files sitting in some fixed location. Files in  /usr/lib, or ${java.home} (e.g. tools.jar). It wasn't designed to support miscellaneous .jar files in your project.</p>
+</blockquote>
+<p>后面将jar包导入到私服后，就可以将上面的配置删除掉了。</p>
+]]></content>
+    </entry>
+</feed>

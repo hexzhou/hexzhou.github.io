@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head>
+     <meta charset="utf-8" />
+  <title>springmvc项目中，通过maven使用本地jar包 | Hex&#39;s Blog</title>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+   <script src="https://cdn.staticfile.org/highlight.js/9.15.9/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+ </head>
+ <body>
+     <div class="sidebar animated fadeInDown">
+   <div class="logo-title">
+    <div class="title">
+     <img src="https://hexzhou.github.io//images/avatar.png?v=1568104345998" style="width:127px;" />
+
+     <h3 title=""><a href="/">Hex</a></h3>
+
+     <div class="description">
+      <p>博学深思，明辨笃行</p>
+     </div>
+    </div>
+   </div>
+   <ul class="social-links">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+   </ul>
+   <div class="footer">
+    <div class="by_farbox">
+   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+    </div>
+    
+
+    </div>
+   </div>
+  </div>
+  <div class="main">
+     <div class="page-top animated fadeInDown">
+    <div class="nav">
+    
+     <li><a  href="/">首页</a></li>
+
+     <li><a  href="/archives">归档</a></li>
+
+     <li><a  href="/tags">标签</a></li>
+
+     <li><a  href="/post/about">关于</a></li>
+
+    </div>
+    <div class="information">
+     <div class="back_btn">
+      <li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li>
+     </div>
+    </div>
+   </div>
+   <div class="autopagerize_page_element">
+    <div class="content">
+     <div class="post-page">
+      <div class="post animated fadeInDown">
+       <div class="post-title">
+        <h3><a>springmvc项目中，通过maven使用本地jar包</a></h3>
+       </div>
+       <div class="post-content">
+        <h2 id="起因">起因</h2>
+<p>项目所有的jar包都使用maven repository私服，所以如果有新的第三方包，就需要先上传上去私服才能使用，但是需要<br>
+一些时间。可是开发进度不等人，所以要想办法直接在项目中使用第三方包。</p>
+<!-- more -->
+<h2 id="解决办法一">解决办法一</h2>
+<p>在pom.xml文件中添加</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.yourgroup&lt;/groupId&gt;
+    &lt;artifactId&gt;yourartifactId&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;scope&gt;system&lt;/scope&gt;
+    &lt;systemPath&gt;${project.basedir}/lib/xxx.jar&lt;/systemPath&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>其中groupId、artifactId和version对应的值都可以随便填写，然后systemPath填写jar对应的路径</p>
+<pre><code>${project.basedir}/lib/xxx.jar
+对应的文件目录架构如下
+- |project
+-- |src
+--- |main
+-- |lib
+--- | xxx.jar
+</code></pre>
+<p>添加了这个依赖之后，intelliJ 就可以在开发的时候，索引到依赖。<br>
+可是，当运行项目和用maven进行打包时，无法将该jar包打到项目内，导致无法找到对应的类。<br>
+解决办法是在pom.xml中加入</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.6&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;warName&gt;${project.artifactId}&lt;/warName&gt;
+        &lt;webResources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;/lib&lt;/directory&gt;
+                &lt;targetPath&gt;WEB-INF/lib&lt;/targetPath&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.jar&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/resource&gt;
+         &lt;/webResources&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+<p>意思是增加一个maven打包的插件，把/lib目录下的jar文件都进行打包。</p>
+<h2 id="解决办法二">解决办法二</h2>
+<p>可以把jar包放到<code>src/main/java/webapp/WEB-INF/lib/</code>下，然后在pom.xml中加入</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.yourgroup&lt;/groupId&gt;
+    &lt;artifactId&gt;yourartifactId&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;scope&gt;system&lt;/scope&gt;
+    &lt;systemPath&gt;${project.basedir}/src/main/webapp/WEB-INF/lib/xxx.jar&lt;/systemPath&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>这样子，就可以不需要像方法一一样加入maven打包插件了</p>
+<h2 id="后记">后记</h2>
+<p>其实在pom.xml声明system级别的scope是十分不推荐的行为，是evil的。</p>
+<blockquote>
+<p>System scope was only designed to deal with 'system' files; files sitting in some fixed location. Files in  /usr/lib, or ${java.home} (e.g. tools.jar). It wasn't designed to support miscellaneous .jar files in your project.</p>
+</blockquote>
+<p>后面将jar包导入到私服后，就可以将上面的配置删除掉了。</p>
+
+       </div>
+       <div class="post-footer">
+        <div class="meta">
+         <div class="info">
+          <i class="fa fa-sun-o"></i>
+          <span class="date">2017-01-18</span>
+          <i class="fa fa-tag"></i>
+          
+          <a class="tag" href="https://hexzhou.github.io//tag/NLeW_mJmq" title="Java">Java </a>
+          
+          <a class="tag" href="https://hexzhou.github.io//tag/RFppuZvZeu" title="Maven">Maven </a>
+          
+          <a class="tag" href="https://hexzhou.github.io//tag/YSY7ehwnJL" title="Spring">Spring </a>
+          
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="share">
+       <div class="evernote">
+        <a class="fa fa-bookmark" href="javascript:(function(){EN_CLIP_HOST='http://www.evernote.com';try{var%20x=document.createElement('SCRIPT');x.type='text/javascript';x.src=EN_CLIP_HOST+'/public/bookmarkClipper.js?'+(new%20Date().getTime()/100000);document.getElementsByTagName('head')[0].appendChild(x);}catch(e){location.href=EN_CLIP_HOST+'/clip.action?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title);}})();" ref="nofollow" target="_blank"></a>
+       </div>
+       <div class="weibo">
+        <a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a>
+       </div>
+       <div class="twitter">
+        <a class="fa fa-twitter" href="http://twitter.com/home?status=,https://hexzhou.github.io//post/add-local-jar-files-in-maven-project,;"></a>
+       </div>
+      </div>
+      <div class="pagination">
+       <ul class="clearfix">
+
+        <li class="pre pagbuttons"><a class="btn" role="navigation" href="https://hexzhou.github.io//post/python-exec-cmd-over-ssh" title="使用Python批量SSH登录服务器执行命令">上一篇</a></li>
+         
+        
+       </ul>
+      </div>
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'a29dc369b12257a0236b',
+    clientSecret: '886823b551c61d8d08f7005e454967ba36b64421',
+    repo: 'hexzhou@hotmail.com',
+    owner: 'hexzhou',
+    admin: ['hexzhou'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+          
+        
+     </div>
+    </div>
+   </div>
+  </div>
+  <script src="https://hexzhou.github.io//media/scripts/jquery.js"></script>
+  <script src="https://hexzhou.github.io//media/scripts/jquery-migrate-1.2.1.min.js"></script>
+  <script src="https://hexzhou.github.io//media/scripts/jquery.appear.js"></script>
+
+
+ </body>
+</html>
