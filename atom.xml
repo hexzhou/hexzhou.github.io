@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hexzhou.github.io/</id>
     <title>Hex&apos;s Blog</title>
-    <updated>2020-11-20T11:57:07.982Z</updated>
+    <updated>2020-11-20T13:10:57.043Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hexzhou.github.io/"/>
     <link rel="self" href="https://hexzhou.github.io/atom.xml"/>
@@ -10,6 +10,108 @@
     <logo>https://hexzhou.github.io/images/avatar.png</logo>
     <icon>https://hexzhou.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Hex&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[如何在氧OS打开一加时钟的法定工作日(跳过节假日)功能]]></title>
+        <id>https://hexzhou.github.io/post/ru-he-zai-yang-os-da-kai-yi-jia-shi-zhong-de-fa-ding-gong-zuo-ri-tiao-guo-jie-jia-ri-gong-neng/</id>
+        <link href="https://hexzhou.github.io/post/ru-he-zai-yang-os-da-kai-yi-jia-shi-zhong-de-fa-ding-gong-zuo-ri-tiao-guo-jie-jia-ri-gong-neng/">
+        </link>
+        <updated>2020-11-20T12:01:52.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="准备工作">准备工作</h3>
+<ol>
+<li>手机开启bootloader</li>
+<li>刷入magisk用于安装必要模块和获取root权限</li>
+<li>Play Store安装ApkExtractor用于提取时钟apk</li>
+<li>一台配置了Java环境的Win PC</li>
+</ol>
+<h3 id="过程">过程</h3>
+<ol>
+<li>
+<p>首先打开ApkExtractor，找到<code>时钟</code>应用，包名为<code>com.oneplus.deskclock</code>，点击旁边菜单，选择<code>分享</code><br>
+<img src="https://hexzhou.github.io//post-images/1605874073702.jpg" alt="" loading="lazy"><br>
+提取的APK所在路径，可以在右上角设置菜单查看<br>
+<img src="https://hexzhou.github.io//post-images/1605874214935.jpg" alt="" loading="lazy"><br>
+<img src="https://hexzhou.github.io//post-images/1605874223166.jpg" alt="" loading="lazy"><br>
+在对应路径下，找到APK，并将APK导入PC</p>
+</li>
+<li>
+<p>然后在PC上下载<code>AndroidKiller_v1.3.1.zip</code>(https://down.52pojie.cn/Tools/Android_Tools/)，解压该压缩包。同时下载最新版<code>apktool</code>(https://bitbucket.org/iBotPeaches/apktool/downloads/)。<code>AndroidKiller 1.3.1</code>内置的apktool太旧，会导致反编译错误。</p>
+</li>
+<li>
+<p>打开<code>AndroidKiller.exe</code>，选择最上面的<code>Android</code>菜单，点击<code>APKTOOL</code>管理器，将我下载好的<code>apktool.jar</code> 添加进去<br>
+<img src="https://hexzhou.github.io//post-images/1605874881181.png" alt="" loading="lazy"><br>
+选择默认的ApkTool版本为我们新添加的版本<br>
+<img src="https://hexzhou.github.io//post-images/1605874887653.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>选择<code>主页</code>菜单，点击<code>打开</code>，选择我们从手机上导出来的时钟Apk.<br>
+<img src="https://hexzhou.github.io//post-images/1605875052797.png" alt="" loading="lazy"><br>
+稍作等待后，提示<code>APK 反编译完成!</code>即可，对于<code>APK 源码反编译失败!</code>我们暂时忽略<br>
+<img src="https://hexzhou.github.io//post-images/1605875208858.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>左边菜单，选择<code>工程管理器</code>，依次展开<code>smali_classes5</code> -&gt; <code>com</code> -&gt; <code>oneplus</code> -&gt; <code>deskclock</code> -&gt; <code>picker</code>。找到<code>PickerUtils.smali</code>，双击打开<code>PickerUtils.smali</code>，滚到最下面，找到<code>.method public static isH2()Z</code>方法<br>
+将其中的</p>
+</li>
+</ol>
+<pre><code>.method public static isH2()Z
+    .locals 1
+
+    .line 28
+    invoke-static {}, Lcom/oneplus/deskclock/Utils;-&gt;isH2()Z
+
+    move-result v0
+
+    return v0
+.end method
+</code></pre>
+<p>修改成</p>
+<pre><code>.method public static isH2()Z
+    .locals 1
+
+    .line 28
+    const/4 v0, 0x1
+
+    return v0
+.end method
+</code></pre>
+<p>并保存。<br>
+<img src="https://hexzhou.github.io//post-images/1605876089271.png" alt="" loading="lazy"></p>
+<blockquote>
+<p>该段代码逻辑，实际是调用一个静态方法判断当前系统是不是氢OS，然后进行返回。如果不是氢OS，就不会显示<code>法定工作日</code>的选项，所以我们只要把这个方法，修改成强制返回<code>const/4 v0, 0x1</code>，时钟就会判定成是氢OS，从而打到目的。</p>
+</blockquote>
+<ol start="6">
+<li>在修改后，我们需要进行编译，选择<code>Android</code>菜单，点击<code>编译</code>。发现<code>APK编译失败</code>，错误如下</li>
+</ol>
+<pre><code>   正在编译 APK，请稍等...
+&gt;I: Using Apktool 2.4.1
+&gt;I: Smaling smali folder into classes.dex...
+&gt;I: Smaling smali_classes2 folder into classes2.dex...
+&gt;I: Smaling smali_classes3 folder into classes3.dex...
+&gt;I: Smaling smali_classes4 folder into classes4.dex...
+&gt;I: Smaling smali_classes5 folder into classes5.dex...
+&gt;I: Building resources...
+&gt;W: D:\apk\AndroidKiller\projects\DeskClock\Project\res\values\styles.xml:926: error: Resource entry CitiesTheme already has bag item onePlusActionbarBackgroundColor.
+&gt;W: D:\apk\AndroidKiller\projects\DeskClock\Project\res\values\styles.xml:925: Originally defined here.
+&gt;W: 
+&gt;brut.androlib.AndrolibException: brut.common.BrutException: could not exec (exit code = 1): [C:\Users\GZZHOU~1\AppData\Local\Temp\brut_util_Jar_4336882941068523831.tmp, p, --forced-package-id, 127, --min-sdk-version, 29, --target-sdk-version, 29, --version-code, 530, --version-name, 5.3.0, --no-version-vectors, -F, C:\Users\GZZHOU~1\AppData\Local\Temp\APKTOOL1039353466293257463.tmp, -e, C:\Users\GZZHOU~1\AppData\Local\Temp\APKTOOL8918995624491212644.tmp, -0, arsc, -I, C:\Users\gzzhoukaihuan\AppData\Local\apktool\framework\1.apk, -S, D:\apk\AndroidKiller\projects\DeskClock\Project\res, -M, D:\apk\AndroidKiller\projects\DeskClock\Project\AndroidManifest.xml]
+APK 编译失败，无法继续下一步签名!
+</code></pre>
+<p>原因是<code>\DeskClock\Project\res\values\styles.xml</code>这个文件，有一个变量定义重复了。依次展开<code>res</code> -&gt; <code>values</code>，找到并双击打开<code>styles.xml</code>，找到错误提示的925行，删除掉其中重复的一行后保存。<br>
+<img src="https://hexzhou.github.io//post-images/1605876232466.png" alt="" loading="lazy"><br>
+删除掉925行或者926后，保存，再点击<code>编译</code><br>
+<img src="https://hexzhou.github.io//post-images/1605876385968.png" alt="" loading="lazy"><br>
+编译完成后，还会自动签名。<em><strong>将编译完成的APK，导入手机。</strong></em></p>
+<ol start="7">
+<li>现在修改版的时钟应用已经弄好了，只剩下如何替换掉系统内的原有的时钟应用了。我这边采用的方法使用<code>App Systemizer</code>讲替换安装到系统分区。<br>
+具体操作为<br>
+a. 是先下载<code>Root Explorer</code>，我们俗称的<code>RE文件管理器</code>。给予RE文件管理器ROOT权限后，进入<code>/system/app</code>目录，<code>挂载为可读写</code>后，删除<code>DeskClock</code>文件后，重启。重启后，时钟应用就消失了。<br>
+b. <code>magisk</code>搜索安装<code>App Systemizer</code>模块和<code>BusyBox for Android NDK</code>模块，重启。<br>
+c. 在Play Store安装<code>Termux</code>后，运行<code>Termux</code>，输入<code>su</code> 获取root权限，再输入<code>systemize</code>，然后输入<code>3</code>，输入从电脑导入到手机上的修改版时钟应用的路径，比如我的是<code>/sdcard/clock.apk。安装完成后，重启。 d. 最后就能在手机应用列表看到新的时钟应用，且有</code>法定工作日`的选项。<br>
+<img src="https://hexzhou.github.io//post-images/1605877666824.jpg" alt="" loading="lazy"></li>
+</ol>
+<p>关于<code>App Systemizer</code>的安装使用，可以参考<a href="https://izaka.tw/magisk-app_systemizer-guide/">这篇文章</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MySQL中纵表的运用]]></title>
         <id>https://hexzhou.github.io/post/mysql-vertical-table/</id>
