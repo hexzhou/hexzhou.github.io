@@ -2,18 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hexzhou.github.io/</id>
     <title>Hex&apos;s Blog</title>
-    <updated>2019-09-11T08:54:31.979Z</updated>
+    <updated>2020-11-20T11:57:07.982Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hexzhou.github.io/"/>
-    <link rel="self" href="https://hexzhou.github.io//atom.xml"/>
+    <link rel="self" href="https://hexzhou.github.io/atom.xml"/>
     <subtitle>博学深思，明辨笃行</subtitle>
-    <logo>https://hexzhou.github.io//images/avatar.png</logo>
-    <icon>https://hexzhou.github.io//favicon.ico</icon>
-    <rights>All rights reserved 2019, Hex&apos;s Blog</rights>
+    <logo>https://hexzhou.github.io/images/avatar.png</logo>
+    <icon>https://hexzhou.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2020, Hex&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[MySQL中纵表的运用]]></title>
-        <id>https://hexzhou.github.io//post/mysql-vertical-table</id>
-        <link href="https://hexzhou.github.io//post/mysql-vertical-table">
+        <id>https://hexzhou.github.io/post/mysql-vertical-table/</id>
+        <link href="https://hexzhou.github.io/post/mysql-vertical-table/">
         </link>
         <updated>2019-09-10T08:39:24.000Z</updated>
         <summary type="html"><![CDATA[<h3 id="起因">起因</h3>
@@ -147,8 +147,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[使用Python批量SSH登录服务器执行命令]]></title>
-        <id>https://hexzhou.github.io//post/python-exec-cmd-over-ssh</id>
-        <link href="https://hexzhou.github.io//post/python-exec-cmd-over-ssh">
+        <id>https://hexzhou.github.io/post/python-exec-cmd-over-ssh/</id>
+        <link href="https://hexzhou.github.io/post/python-exec-cmd-over-ssh/">
         </link>
         <updated>2019-07-16T08:00:59.000Z</updated>
         <summary type="html"><![CDATA[<h3 id="目的">目的</h3>
@@ -229,8 +229,8 @@ if __name__ == &quot;__main__&quot;:
     </entry>
     <entry>
         <title type="html"><![CDATA[springmvc项目中，通过maven使用本地jar包]]></title>
-        <id>https://hexzhou.github.io//post/add-local-jar-files-in-maven-project</id>
-        <link href="https://hexzhou.github.io//post/add-local-jar-files-in-maven-project">
+        <id>https://hexzhou.github.io/post/add-local-jar-files-in-maven-project/</id>
+        <link href="https://hexzhou.github.io/post/add-local-jar-files-in-maven-project/">
         </link>
         <updated>2017-01-18T08:13:48.000Z</updated>
         <summary type="html"><![CDATA[<h2 id="起因">起因</h2>
