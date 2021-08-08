@@ -2,14 +2,212 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hexzhou.github.io/</id>
     <title>Hex&apos;s Blog</title>
-    <updated>2020-11-20T13:14:15.692Z</updated>
+    <updated>2021-08-08T13:43:51.755Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hexzhou.github.io/"/>
     <link rel="self" href="https://hexzhou.github.io/atom.xml"/>
     <subtitle>博学深思，明辨笃行</subtitle>
     <logo>https://hexzhou.github.io/images/avatar.png</logo>
     <icon>https://hexzhou.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Hex&apos;s Blog</rights>
+    <rights>All rights reserved 2021, Hex&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Java的未来？--GraalVM和Quarkus分享]]></title>
+        <id>https://hexzhou.github.io/post/graalvm-and-quarkus/</id>
+        <link href="https://hexzhou.github.io/post/graalvm-and-quarkus/">
+        </link>
+        <updated>2021-07-24T07:42:49.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="当前java项目执行的问题">当前Java项目执行的问题</h2>
+<h3 id="项目运行需要jdk环境且jdk比应用服务磁盘占用大">项目运行需要JDK环境，且JDK比应用服务磁盘占用大</h3>
+<p>运行一个Java项目，理所当然的，需要配置一个JDK环境。<br>
+要么是在每台服务器上面配置好JDK，在上面的Java服务使用同一套JDK；要么可能是使用了容器化技术，每个docker image都要配置基础的JDK环境。<br>
+我在windows上查看我安装的JDK大小，对于Oracle-JDK8，在windows上要186MB。<br>
+然后我上hub.docker.com查看JDK8相关的镜像，发现JDK8的镜像需要200M之多。<br>
+虽然docker的分层技术，可以让每台部署docker的服务器上面使用同一层JDK8的环境，但是仍然大概率会出现说我们第一个应用jar包可能只有100M-200M，而JDK却比应用jar大。</p>
+<h3 id="项目的代码并不是每个类每行代码都会被调用">项目的代码并不是每个类每行代码都会被调用</h3>
+<p>我们打包的代码不一定都用上，类似于Apache Common、Guava等类库包，我们可能只是使用了相关的一些功能，但是很多功能我们并不是实实在在的用上，但是当我们打成一个fat jar的时候，还是会带上这些lib。同样的，我们在迭代中，可能会出现很多并没有使用上的类，但是它们仍然会被编译和打包。</p>
+<h3 id="相对于go或者是rustjava项目的内存占用大">相对于Go或者是Rust，Java项目的内存占用大</h3>
+<p>对于一个空的JVM Web应用（基于Spring Boot），一启动内存占用可能就就到200M以上了。而作为对比，一个空的Go Web项目，其实只要10M左右。<br>
+我查看了我们公司内部的一些容器化的项目，一个只是做相关合并排序操作的Java项目，内存占用就高达1.2-1.5G。</p>
+<h3 id="java启动速度慢导致发布时间长动态扩容难度增大">Java启动速度慢，导致发布时间长，动态扩容难度增大</h3>
+<p>我们可能需要（先启动Docker），启动JVM，通过JIT机制加载编译好的代码。这对于一个中大型项目来说，启动速度十分的慢，发版时间长。如果突发高峰，我们需要动态扩容，那么在高峰期，我们需要等待新的一批机器启动完毕，才能将这些启动好的Java项目对外使用，可能启动起来了，高峰期都过了。<br>
+再者，JIT的机制，导致我代码需要Warm Up，这就导致了我们在刚启动Java项目的时候，会出现小部分的超时。</p>
+<h3 id="小结">小结</h3>
+<p>对于Faas架构、或者是serverless的趋势下，Java项目存在启动高延时，对磁盘和内存资源高占用的问题。对比Go、Rust等技术，呈现明显的掉队情况</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="当前java项目执行的问题">当前Java项目执行的问题</h2>
+<h3 id="项目运行需要jdk环境且jdk比应用服务磁盘占用大">项目运行需要JDK环境，且JDK比应用服务磁盘占用大</h3>
+<p>运行一个Java项目，理所当然的，需要配置一个JDK环境。<br>
+要么是在每台服务器上面配置好JDK，在上面的Java服务使用同一套JDK；要么可能是使用了容器化技术，每个docker image都要配置基础的JDK环境。<br>
+我在windows上查看我安装的JDK大小，对于Oracle-JDK8，在windows上要186MB。<br>
+然后我上hub.docker.com查看JDK8相关的镜像，发现JDK8的镜像需要200M之多。<br>
+虽然docker的分层技术，可以让每台部署docker的服务器上面使用同一层JDK8的环境，但是仍然大概率会出现说我们第一个应用jar包可能只有100M-200M，而JDK却比应用jar大。</p>
+<h3 id="项目的代码并不是每个类每行代码都会被调用">项目的代码并不是每个类每行代码都会被调用</h3>
+<p>我们打包的代码不一定都用上，类似于Apache Common、Guava等类库包，我们可能只是使用了相关的一些功能，但是很多功能我们并不是实实在在的用上，但是当我们打成一个fat jar的时候，还是会带上这些lib。同样的，我们在迭代中，可能会出现很多并没有使用上的类，但是它们仍然会被编译和打包。</p>
+<h3 id="相对于go或者是rustjava项目的内存占用大">相对于Go或者是Rust，Java项目的内存占用大</h3>
+<p>对于一个空的JVM Web应用（基于Spring Boot），一启动内存占用可能就就到200M以上了。而作为对比，一个空的Go Web项目，其实只要10M左右。<br>
+我查看了我们公司内部的一些容器化的项目，一个只是做相关合并排序操作的Java项目，内存占用就高达1.2-1.5G。</p>
+<h3 id="java启动速度慢导致发布时间长动态扩容难度增大">Java启动速度慢，导致发布时间长，动态扩容难度增大</h3>
+<p>我们可能需要（先启动Docker），启动JVM，通过JIT机制加载编译好的代码。这对于一个中大型项目来说，启动速度十分的慢，发版时间长。如果突发高峰，我们需要动态扩容，那么在高峰期，我们需要等待新的一批机器启动完毕，才能将这些启动好的Java项目对外使用，可能启动起来了，高峰期都过了。<br>
+再者，JIT的机制，导致我代码需要Warm Up，这就导致了我们在刚启动Java项目的时候，会出现小部分的超时。</p>
+<h3 id="小结">小结</h3>
+<p>对于Faas架构、或者是serverless的趋势下，Java项目存在启动高延时，对磁盘和内存资源高占用的问题。对比Go、Rust等技术，呈现明显的掉队情况</p>
+<!-- more -->
+<h2 id="graalvm和native-image技术的到来">GraalVM和Native-Image技术的到来</h2>
+<h3 id="什么是graalvm">什么是GraalVM</h3>
+<ol>
+<li>是一个基于OpenJDK/OracleJDK修改过的，高级一点的JDK。他可以类似于其他JDK，提供一个JVM环境供Java服务使用。其中作为JVM使用时，GraalVM使用Graal Compiler替换了HotspotVM上的年代久远且很久没有大的更新维护的C2编译器，如下图。<br>
+<img src="https://hexzhou.github.io//post-images/1627230423015.png" alt="" loading="lazy"></li>
+<li>可以使用<code>AOT编译器</code>，将应用程序编译成<code>本地映像（native-image)</code>，即是将Java代码直接编译成可以执行的程序，类比Go编译的输出</li>
+<li>多语言支持，除了JVM语言的支持外，在GraalVM上还能编译运行诸如C++，python，JavaScript等语言。也就是说GraalVM支持跨语言调用，且性能还不错，大有一统天下VM的趋势。<br>
+<img src="https://hexzhou.github.io//post-images/1627230659475.png" alt="" loading="lazy"></li>
+</ol>
+<h3 id="aot编译ahead-of-time-compilation">AOT编译（Ahead-of-Time Compilation）</h3>
+<p>GraalVM通过native-image技术，可以提前静态分析和编译代码。它使用静态分析的技术，将<strong>需要的、实际使用到的类</strong>分析出来，将这些实际用到的类编译成机器码，形成一个可执行文件。而这个可执行文件需要运行起来，就需要<code>Substrate VM</code>的支持<br>
+<a href="https://hexzhou.github.io//post-images/1627231216488.jpg"></a></p>
+<h3 id="substrate-vm">Substrate VM</h3>
+<p>Substrate VM 是一个在 GraalVM 里的极小型的运行时环境，包括了独立的异常处理、同步调度、线程管理、内存管理（垃圾收集器 Serial GC， G1，Epsilon GC）和JNI访问等组件。<br>
+Substrate VM 还包含了一个本地镜像的构造器（Native Image Generator），用户可以通过本地镜像构造器构建基于构建机器的可执行文件。<br>
+如下图，可以看到基于GraalVM，各种语言通过Truffle Framwork和Graal Compiler，运行在HostSpot JVM上或者是SubstrateVM上。<br>
+<img src="https://hexzhou.github.io//post-images/1627231212550.png" alt="" loading="lazy"></p>
+<h3 id="如何使用">如何使用</h3>
+<ol start="0">
+<li>首先需要在我们的机器上配置C/C++编译的环境<br>
+对于linux</li>
+</ol>
+<pre><code># dnf （rpm-based）
+sudo dnf install gcc glibc-devel zlib-devel libstdc++-static
+# apt （debian-based）
+sudo apt-get install build-essential libz-dev zlib1g-dev
+# yum （centos）
+sudo yum install gcc glibc-devel zlib-devel
+</code></pre>
+<p>对于macos</p>
+<pre><code>xcode-select --install
+</code></pre>
+<p>对于windows，需要安装Visual Studio 2017以上的版本（需要用到里面的Visual C++ Build Tools），且安装是需要勾选语言为英文（使用中文的x64命令行会导致编译native-image失败）</p>
+<ol>
+<li>安装GraalVM并且配置环境变量<br>
+对于linux/macos，可以直接使用SDKMAN安装</li>
+</ol>
+<pre><code>curl -s &quot;https://get.sdkman.io&quot; | bash
+source &quot;$HOME/.sdkman/bin/sdkman-init.sh&quot;
+sdk install java 21.1.0.r11-grl
+</code></pre>
+<p>对于windows，直接上官网下载后，按JDK配置环境变量的方式进行配置即可<br>
+2.  安装Native-Image</p>
+<pre><code>gu install native-image
+</code></pre>
+<p>gu是GraalVM提供的用于安装相关支持的工具，比如如果想在GraalVM编译Python代码，则只需要使用<code>gu install python</code>即可添加python支持，其他语言类似<br>
+3. 编写年轻人的第一个Java程序--Hello World</p>
+<pre><code>public class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println(&quot;Hello, World!&quot;);
+  }
+}
+</code></pre>
+<ol start="4">
+<li>在终端执行命令编译运行Java代码</li>
+</ol>
+<pre><code>javac HelloWorld.java
+java HelloWorld
+此时，终端就会出现 Hello World! 的字样
+</code></pre>
+<ol start="5">
+<li>这是再使用<code>native-image HelloWorld</code>即可将java代码编译成可执行程序，对应在windows上的，就是<code>helloworld.exe</code>，对应在linux/macos上的就是<code>helloworld</code>的二进制文件。通过在命令行使用<code>helloworld.exe</code>或者<code>./helloworld</code>既可运行这个HelloWorld程序</li>
+</ol>
+<h3 id="小结-2">小结</h3>
+<ol>
+<li>通过GraalVM和native-image技术，我的可以摆脱JVM的依赖来运行Java编写的程序</li>
+<li>通过队代码的静态分析编译和摈弃了原有的JIT机制，能让程序拥有更快的的冷启动速度和更小内存占用（后文体现）</li>
+</ol>
+<h2 id="spring的努力spring-native">Spring的努力——Spring Native</h2>
+<blockquote>
+<p>Spring Native provides support for compiling Spring applications to native executables using the GraalVM native-image compiler.</p>
+</blockquote>
+<p>在Graal Native技术出来之后，Spring也不断的在尝试将Spring程序编译成本地的可执行的程序。那么他当前的现况如下</p>
+<ol>
+<li>Beta阶段（2021.3.11），没有正式的release版本，支持了自家很多类库</li>
+<li>Jdk11编译出来的程序文件特别大，有bug，官方还未完全修复</li>
+<li>Spring Boot兼容性并不够，不适合在生产环境使用</li>
+<li>支持JDK Proxy，不支持CGLIB代理，且反射涉及的类需要额外配置（反射需要相关配置是Native-Image技术目前的通病）<br>
+但是仍然可以看到Spring项目对native技术不断的努力。<br>
+以下是使用一个基于Spring Boot生成一个空项目做简单的对比。</li>
+</ol>
+<h3 id="启动对比">启动对比</h3>
+<p>使用native image技术编译后的Spring Boot项目<br>
+<img src="https://hexzhou.github.io//post-images/1627232557072.png" alt="" loading="lazy"><br>
+使用mvn package编译后，使用java -jar启动<br>
+<img src="https://hexzhou.github.io//post-images/1627232588562.png" alt="" loading="lazy"><br>
+可以看到native-image技术下的Spring Boot项目有更好的启动速度和更低的内存占用。<br>
+其中更好的启动速度是因为AOT已经提前编译好了代码，不存在像JIT之类的动态类加载机制，避免了相关的耗时，直接启动即可。而更低的内存占用也是因为摈弃了JIT机制，减少了像需要管理动态的类加载之类的线程；同时native下的Java服务，其方法区只是简单的存储一下类的相关元数据，而不像JVM下需要保留整个类加载的数据。</p>
+<h3 id="缺点">缺点</h3>
+<p>编译速度十分慢（1. Native-Image编译本身慢， 2 Spring Native优化没做好），且编译需要大内存。<br>
+使用native-image技术编译<code>mvn package -Pnative</code>，使用了4分半<br>
+<img src="https://hexzhou.github.io//post-images/1627232858645.png" alt="" loading="lazy"><br>
+使用原来的mvn package只需要22s<br>
+<img src="https://hexzhou.github.io//post-images/1627232908556.png" alt="" loading="lazy"></p>
+<h3 id="小结-3">小结</h3>
+<ol start="0">
+<li>Spring Native技术让Spring有了很好的冷启动速度和减少的内存占用</li>
+<li>Spring比较庞大，有很多历史遗留的兼容的原因，兼容的进度不快。</li>
+<li>要使用native技术，需要放弃很多Spring上的动态特性。</li>
+<li>编译占用内存大，且编译时间长（native-image技术通病）</li>
+</ol>
+<h2 id="未来已来quarkus">未来已来？Quarkus</h2>
+<h3 id="什么是quarkus">什么是Quarkus</h3>
+<ol>
+<li>RedHat开源的一款Java Framework，最新版本2.1.1（社区活跃，版本告诉迭代中）</li>
+<li>为 Java 虚拟机（JVM）和原生编译而设计的全堆栈 Kubernetes 原生 Java 框架</li>
+<li>专门针对容器优化 Java，并使其成为Serverless、Cloud和 Kubernetes 环境的高效平台。</li>
+<li>Quarkus 可与常用 Java 标准、框架和库协同工作，支持诸如 Eclipse MicroProfile、Spring、Apache Kafka、RESTEasy (JAX-RS)、Hibernate ORM (JPA)、Infinispan、Camel 等等类库</li>
+<li>支持依赖注入（基于CDI），且包含一个扩展框架来扩展功能并将其配置、引导并集成到您的应用中。添加扩展就像添加依赖项一样容易</li>
+<li>向 GraalVM 提供正确信息，以便对应用进行原生编译。</li>
+</ol>
+<h3 id="优点">优点</h3>
+<p>搭配native-image技术，冷启动速度快，内存占用小，磁盘占用小<br>
+<img src="https://hexzhou.github.io//post-images/1628407267476.png" alt="" loading="lazy"><br>
+<img src="https://hexzhou.github.io//post-images/1628407271839.png" alt="" loading="lazy"><br>
+支持命令式和reactive模式编码（图中 @Inject 即为依赖注入）<br>
+<img src="https://hexzhou.github.io//post-images/1628407322271.png" alt="" loading="lazy"><br>
+拥有LiveReload机制，可以一边开发，一边检验成果。提高开发效率<br>
+<img src="https://hexzhou.github.io//post-images/1628407684587.png" alt="" loading="lazy"><br>
+idea支持好，可以直接生成Quarkus项目<br>
+<img src="https://hexzhou.github.io//post-images/1628408377420.png" alt="" loading="lazy"><br>
+容器化支持好，新建的项目直接包含dockerfile<br>
+<img src="https://hexzhou.github.io//post-images/1628408430637.png" alt="" loading="lazy"></p>
+<h3 id="如何进行使用">如何进行使用</h3>
+<ol>
+<li>idea可直接生成Quarkus框架的项目</li>
+<li>下一步可以直接选择你项目需要的依赖库，比如Spring Web Api（可以使用Spring Web注解的方式开发程序）、Redis Client（用于连接Redis）</li>
+<li>创建项目后，使用 <code>./mvnw compile quarkus:dev</code> 即可启动。</li>
+<li>启动后，支持LiveReload机制，直接修改代码后保存即可生效</li>
+<li>如果要编译成可执行程序，只需要使用 <code>./mvnw package -Pnatvie</code> 编译即可。</li>
+</ol>
+<h3 id="缺点-2">缺点</h3>
+<ol>
+<li>新框架，更新迭代速度快，经常需要升级版本修复BUG，对许多类库支持仍在PREVIEW或者EXPERIMENTAL阶段，不保证稳定。</li>
+<li>由于技术太新，市面上还没有大公司落地native技术的实践，还需要进一步观察。</li>
+<li>为了速度，抛弃了很多Java技术的动态特性。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>通过构建<code>native image</code>解决了传统Java程序的几个痛点<br>
+1、放弃了Java的动态类加载特性，内存占用大大减小<br>
+2、通过编译成可执行文件，冷启动速度大大加快<br>
+3、特别适合容器化(docker、k8s)部署（构建出来的docker image小巧）<br>
+与传统的Java虚拟机不同，Native Image是封闭式的静态分析和编译，不支持class的动态加载，程序运行所需要的所有依赖项均在静态分析阶段完成。<br>
+缺点：<br>
+1、打包之后就不能用传统的java调试工具了，要调试只能用gdb，调试过程比较复杂， Arthas等不可用。（好在idea提供了开发调试方面的支持，GraalVM也提供了导出程序Heap的工具）<br>
+2、反射涉及类加载，需要额外的配置文件，不是很方便<br>
+3、传统的JVMTI、java agent、JMX等等功能都用不了<br>
+4、编译时间长且编译时内存占用较大</p>
+<h2 id="参考链接">参考链接</h2>
+<p>native-image：https://www.graalvm.org/reference-manual/native-image/#install-native-image<br>
+Spring Native：https://docs.spring.io/spring-native/docs/current/reference/htmlsingle/#overview<br>
+Quarkus: https://quarkus.io/<br>
+Springboot 和 quarkus 的对比文章：https://www.sokube.ch/post/why-i-use-quarkus-rather-than-spring-boot<br>
+Pros and Cons for Using GraalVM Native-Images：https://dzone.com/articles/profiling-native-images-in-java</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[如何在氧OS打开一加时钟的法定工作日(跳过节假日)功能]]></title>
         <id>https://hexzhou.github.io/post/ru-he-zai-yang-os-da-kai-yi-jia-shi-zhong-de-fa-ding-gong-zuo-ri-tiao-guo-jie-jia-ri-gong-neng/</id>
