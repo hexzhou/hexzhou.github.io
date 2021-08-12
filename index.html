@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1628430264659">
+<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1628783444699">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css">
 
@@ -30,7 +30,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://hexzhou.github.io/">
-        <img src="https://hexzhou.github.io//images/avatar.png?v=1628430264659" class="site-logo">
+        <img src="https://hexzhou.github.io//images/avatar.png?v=1628783444699" class="site-logo">
         <h1 class="site-title">Hex&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -108,12 +108,12 @@
                   <h2 id="当前java项目执行的问题">当前Java项目执行的问题</h2>
 <h3 id="项目运行需要jdk环境且jdk比应用服务磁盘占用大">项目运行需要JDK环境，且JDK比应用服务磁盘占用大</h3>
 <p>运行一个Java项目，理所当然的，需要配置一个JDK环境。<br>
-要么是在每台服务器上面配置好JDK，在上面的Java服务使用同一套JDK；要么可能是使用了容器化技术，每个docker image都要配置基础的JDK环境。<br>
+要么是在每台服务器上面配置好JDK，在上面的Java服务使用同一套JDK；要么是使用容器化技术，每个docker image都要配置基础的JDK环境。<br>
 我在windows上查看我安装的JDK大小，对于Oracle-JDK8，在windows上要186MB。<br>
 然后我上hub.docker.com查看JDK8相关的镜像，发现JDK8的镜像需要200M之多。<br>
-虽然docker的分层技术，可以让每台部署docker的服务器上面使用同一层JDK8的环境，但是仍然大概率会出现说我们第一个应用jar包可能只有100M-200M，而JDK却比应用jar大。</p>
+虽然docker的分层技术，可以让每台部署docker的服务器上使用同一层JDK8的环境，但是仍然会出现说我们第一个应用jar包只有100M-200M，而JDK却比应用jar大。</p>
 <h3 id="项目的代码并不是每个类每行代码都会被调用">项目的代码并不是每个类每行代码都会被调用</h3>
-<p>我们打包的代码不一定都用上，类似于Apache Common、Guava等类库包，我们可能只是使用了相关的一些功能，但是很多功能我们并不是实实在在的用上，但是当我们打成一个fat jar的时候，还是会带上这些lib。同样的，我们在迭代中，可能会出现很多并没有使用上的类，但是它们仍然会被编译和打包。</p>
+<p>我们打包的代码不一定都用上，类似于Apache Common、Guava等类库包，我们可能只是使用了相关的一些功能，但是很多功能我们并不是实实在在的用上。当我们打成一个fat jar的时候，会带上这些lib。同样的，我们在迭代中，可能会出现很多并没有使用上的类，但是它们仍然会被编译和打包。</p>
 <h3 id="相对于go或者是rustjava项目的内存占用大">相对于Go或者是Rust，Java项目的内存占用大</h3>
 <p>对于一个空的JVM Web应用（基于Spring Boot），一启动内存占用可能就就到200M以上了。而作为对比，一个空的Go Web项目，其实只要10M左右。<br>
 我查看了我们公司内部的一些容器化的项目，一个只是做相关合并排序操作的Java项目，内存占用就高达1.2-1.5G。</p>
