@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>JetBrains开发工具更换最新的 JBR 提高性能 （MacOS限定） | Hex&#39;s Blog</title>
+<meta name="description" content="博学深思，明辨笃行">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://hexzhou.github.io//favicon.ico?v=1633849967217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://hexzhou.github.io//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://hexzhou.github.io/">
+        <img src="https://hexzhou.github.io//images/avatar.png?v=1633849967217" class="site-logo">
+        <h1 class="site-title">Hex&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/hexzhou" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      博学深思，明辨笃行
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://hexzhou.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">JetBrains开发工具更换最新的 JBR 提高性能 （MacOS限定）</h2>
+            <div class="post-date">2021-10-10</div>
+            
+            <div class="post-content">
+              <h2 id="什么是jbr">什么是JBR</h2>
+<blockquote>
+<p>JetBrains Runtime （即 JetBrains 运行时）是一个运行时环境，用于在 Windows，Mac OS X 和 Linux 上 运行 IntelliJ 平台的各种产品。JetBrains Runtime 基于 OpenJDK 项目，并进行了一些修改。这些修改包括：抗锯齿，Linux 上增强的字体渲染，HiDPI 支持，连字，一些官方版本中未提供的针对产品崩溃的修复程序以及其他小的增强功能。</p>
+</blockquote>
+<!-- more -->
+<p>https://github.com/JetBrains/JetBrainsRuntime<br>
+目前 JetBrains 的开发工具默认使用基于 JDK11 版本的 JBR，而 JDK11 版本的 java2d 使用 OpenGL 来渲染图形基元。JDK 17 的 java2d 使用了 Metal 框架提供更好的性能（JEP 382: New macOS Rendering Pipeline），并更好地支持现代 macOS 版本和硬件。所以我们现在可以更换 JBR 版本以提高 macOS 下 JetBrains 开发工具的性能。<br>
+<img src="https://hexzhou.github.io//post-images/1633848995459.png" alt="" loading="lazy"></p>
+<h2 id="更换步骤以下以idea为例其余诸如pycharm-goland同理">更换步骤（以下以idea为例，其余诸如pycharm、goland同理）</h2>
+<p>•	下载官方提供的最新的 JBR https://github.com/JetBrains/JetBrainsRuntime/releases/tag/jbr17b106.1  或者自行编译（后续教程）<br>
+•	更改开发工具的 VM Options,   Help -&gt; Edit Custom VM Options,   增加以下参数<br>
+--illegal-access=warn<br>
+-Dsun.java2d.metal=true<br>
+--add-opens=java.desktop/java.awt.event=ALL-UNNAMED<br>
+--add-opens=java.desktop/sun.font=ALL-UNNAMED<br>
+--add-opens=java.desktop/java.awt=ALL-UNNAMED<br>
+--add-opens=java.desktop/sun.awt=ALL-UNNAMED<br>
+--add-opens=java.base/java.lang=ALL-UNNAMED<br>
+--add-opens=java.base/java.util=ALL-UNNAMED<br>
+--add-opens=java.desktop/javax.swing=ALL-UNNAMED<br>
+--add-opens=java.desktop/sun.swing=ALL-UNNAMED<br>
+--add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED<br>
+--add-opens=java.desktop/java.awt.peer=ALL-UNNAMED<br>
+--add-opens=java.desktop/javax.swing.text.html=ALL-UNNAMED<br>
+--add-exports=java.desktop/sun.font=ALL-UNNAMED<br>
+--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED<br>
+--add-exports=java.desktop/com.apple.laf=ALL-UNNAMED<br>
+--add-exports=java.desktop/com.apple.eawt.event=ALL-UNNAMED<br>
+<img src="https://hexzhou.github.io//post-images/1633849016382.png" alt="" loading="lazy"><br>
+•	IDEA安装 Choose Runtime 插件 （如果插件商店没有，可以下载离线包进行安装https://plugins.jetbrains.com/plugin/12836-choose-runtime）<br>
+•	使用 Choose Runtime 插件安装并使用最新的 JBR，Help -&gt; Find Action，搜索 Choose Runtime 并运行，点击 … 按钮浏览并选择第一步下载的 JBR 压缩包，然后点击 Install，安装完以后开发工具会自动重启，现在可以看到已经使用了 JDK 17 版本的 JBR<br>
+<img src="https://hexzhou.github.io//post-images/1633849025685.png" alt="" loading="lazy"><br>
+目前官方的 jbr17b106.1 版本 存在BUG： 切换到全屏无法退出全屏，也无法切换屏幕，想要更好的体验，需要自行编译更新的代码</p>
+<h2 id="后悔药">后悔药</h2>
+<p>如果更换了JBR后无法启动的话，或者需要反悔，只需要把对应idea.jdk删除即可<br>
+位置比如：<br>
+~/Library/Application Support/JetBrains/IntelliJIdea2021.2 下的idea.jdk<br>
+对应的 VM Options也在这个位置下的 idea.vmoptions，可以直接删除之前添加的VM Options恢复原样</p>
+<h2 id="自行编译jbr">自行编译JBR</h2>
+<p>由于官方只公布了一个JBR17的release B106.1，且存在BUG，如果想体验更佳的JBR，就需要自行编译了。<br>
+JBR17对应的官方代码分支是  https://github.com/JetBrains/JetBrainsRuntime/tree/master17<br>
+我们参考上面的编译步骤自行编译JBR<br>
+<img src="https://hexzhou.github.io//post-images/1633849063185.png" alt="" loading="lazy"><br>
+预备动作</p>
+<ol>
+<li>安装Xcode，终端输入xcode-select –install 安装xcode command line</li>
+<li>终端输入 brew install autoconf 安装 autoconf</li>
+<li>安装JDK16以上，这里我们可以直接去oracle官方安装JDK17 LTS  https://www.oracle.com/java/technologies/downloads/<br>
+编译<br>
+$ cd JetBrainsRuntime<br>
+$ git checkout master17<br>
+$ sh ./configure<br>
+$ make images</li>
+</ol>
+<p>make images 编译过程需要较长时间</p>
+<p>如果出现<br>
+configure: error: No xcodebuild tool and no system framework headers found, use --with-sysroot or --with-sdk-name to provide a path to a valid SDK<br>
+运行了一下xcodebuild，错误信息如下：<br>
+xcode-select: error: tool 'xcodebuild' requires Xcode,<br>
+but active developer directory<br>
+'/Library/Developer/CommandLineTools' is a command line tools instance<br>
+解决办法<br>
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer<br>
+再重新编译就可以</p>
+<p>编译完成后在<br>
+./JetBrainsRuntime/build/macosx-x86_64-server-release/images/jdk-bundle/jdk-17.jdk<br>
+<img src="https://hexzhou.github.io//post-images/1633849124589.png" alt="" loading="lazy"><br>
+然后按照上面的 更换步骤 用choose runtime 选择编译好的jdk-17.jdk即可<br>
+<img src="https://hexzhou.github.io//post-images/1633849128395.png" alt="" loading="lazy"></p>
+<p>至此，就让IDEA使用上了最新源码编译的JBR17，且用上了metal框架的特性。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://hexzhou.github.io/post/graalvm-and-quarkus/">
+                  <h3 class="post-title">
+                    Java的未来？--GraalVM和Quarkus分享
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'a29dc369b12257a0236b',
+        clientSecret: '886823b551c61d8d08f7005e454967ba36b64421',
+        repo: 'hexzhou.github.io',
+        owner: 'hexzhou',
+        admin: ['hexzhou'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
