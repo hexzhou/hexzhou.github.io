@@ -72,7 +72,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "Bilibili",
 			icon: "fa6-brands:bilibili",
-			url: "https://bilibili.com/space/278751",
+			url: "https://space.bilibili.com/278751",
 		},
 	],
 };
@@ -84,5 +84,5 @@ export const licenseConfig: LicenseConfig = {
 };
 
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
-  themes: ['github-light', 'github-dark'],
+	themes: ['github-light', 'github-dark'],
 }
