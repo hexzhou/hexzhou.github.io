@@ -64,7 +64,7 @@ lang: ''
 > 该段代码逻辑，实际是调用一个静态方法判断当前系统是不是氢 OS，然后进行返回。如果不是氢 OS，就不会显示`法定工作日`的选项，所以我们只要把这个方法，修改成强制返回`const/4 v0, 0x1`，时钟就会判定成是氢 OS，从而打到目的。
 
 6. 在修改后，我们需要进行编译，选择`Android`菜单，点击`编译`。发现`APK编译失败`，错误如下
-```Shell
+```shell
    正在编译 APK，请稍等...
 >I: Using Apktool 2.4.1
 >I: Smaling smali folder into classes.dex...

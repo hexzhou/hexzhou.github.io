@@ -39,7 +39,7 @@ category: 'MySQL'
 ### 应用
 
 回到最开始的问题，我们需要解决给用户增加属性字段的问题。那么我们可以想到，大概结构为"用户 ID，字段，属性值"。具体 SQL 语句如下：
-```SQL
+```sql
 CREATE TABLE `user_extra` (
   `user_id` bigint(20) NOT NULL,
   `field` varchar(50) NOT NULL,
