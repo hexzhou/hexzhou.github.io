@@ -8,6 +8,12 @@ image: ''
 category: 'iOS'
 ---
 ## IPA 下载
+### 2025-06-23
+https://pan.baidu.com/s/1lpDHhSkYnrkAvyW8iy2irA?pwd=m55d 
+
+修复：
+1. 修复：iOS 文件夹权限，0620 手动打包漏了文件夹权限
+
 ### 2025-06-20
 https://pan.baidu.com/s/19XpeszJYkC9RT9pffAyRpg?pwd=adbi 
 
@@ -38,5 +44,5 @@ https://code.moenext.com/hex/ygopro2
 https://pan.baidu.com/s/1bvNmM07uGtjKE4Cr8Iumgg?pwd=g6ap  
 
 ## 特别鸣谢
-1. KoishiPro： https://koishi.pro/download/
+1. KoishiPro: https://koishi.pro/download/
 
