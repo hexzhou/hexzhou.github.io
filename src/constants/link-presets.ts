@@ -16,7 +16,7 @@ export const LinkPresets: { [key in LinkPreset]: NavBarLink } = {
 		url: "/archive/",
 	},
 	[LinkPreset.YGO]: {
-		name: "ygo2ios",
-		url: "/ygo2ios/",
+		name: "ygo",
+		url: "/ygo/",
 	},
 };
