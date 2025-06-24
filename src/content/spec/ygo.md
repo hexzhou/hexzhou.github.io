@@ -1,12 +1,7 @@
----
-title: 'KoishiPro2 个人修改版 Release Notes'
-published: 2025-06-21 00:00:00
-tags: [iOS,ipa,xcode,ygo]
-draft: false
-description: '唯有热爱，不负韶华'
-image: ''
-category: 'iOS'
----
+# YGO
+
+## KoishiPro2 个人修改版 Release Notes
+
 ## IPA 下载
 ### 2025-06-23
 https://pan.baidu.com/s/1lpDHhSkYnrkAvyW8iy2irA?pwd=m55d 
