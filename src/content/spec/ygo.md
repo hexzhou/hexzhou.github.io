@@ -1,4 +1,4 @@
-# YGO KoishiPro2 个人修改版
+# KoishiPro2 iOS 个人修改版 Release Notes
 
 ## 📦 IPA 下载
 

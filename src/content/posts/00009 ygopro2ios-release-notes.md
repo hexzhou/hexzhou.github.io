@@ -1,5 +1,5 @@
 ---
-title: 'KoishiPro2 个人修改版 Release Notes'
+title: 'KoishiPro2 iOS 个人修改版 Release Notes'
 published: 2025-06-21 00:00:00
 tags: [iOS,ipa,xcode,ygo]
 draft: false
