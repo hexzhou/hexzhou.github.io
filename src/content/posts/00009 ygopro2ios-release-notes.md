@@ -8,7 +8,17 @@ image: ''
 category: 'iOS'
 ---
 ## 📦 IPA 下载
+### 2025-07-02
+- **下载地址**：[百度网盘](https://pan.baidu.com/s/1SazPfvPCoj_OkdEOQLfgFw?pwd=cgjg)  
+  **提取码**：`cgjg`
+- **修复内容**：
+  - 协议升级：兼容 1.036.2 版本服务器协议。
+  - UI修复： 解决窗口UI概率性消失的Bug，启动后将自动居中。
+  - 新增服务器：内置“编年史”与“2Pick轮抽”服务器。
+  - 系统兼容： iOS系统要求降低至 13.0 及以上
+  - 功能优化：自定义服务器地址将自动保存至历史记录，方便切换。
 
+---
 ### 2025-06-23
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1lpDHhSkYnrkAvyW8iy2irA?pwd=m55d)  
   **提取码**：`m55d`
