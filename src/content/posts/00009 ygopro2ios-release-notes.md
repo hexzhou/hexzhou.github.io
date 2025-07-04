@@ -8,6 +8,15 @@ image: ''
 category: 'iOS'
 ---
 ## 📦 IPA 下载
+
+### 2025-07-04
+- **下载地址**：[百度网盘](https://pan.baidu.com/s/17MFTNuOgT5cUqvDVrSAHsg?pwd=3c4u)  
+  **提取码**：`3c4u`
+- **修复内容**：
+  - 修复换 SIDE 异常
+
+---
+
 ### 2025-07-02
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1SazPfvPCoj_OkdEOQLfgFw?pwd=cgjg)  
   **提取码**：`cgjg`
@@ -19,6 +28,7 @@ category: 'iOS'
   - 功能优化：自定义服务器地址将自动保存至历史记录，方便切换。
 
 ---
+
 ### 2025-06-23
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1lpDHhSkYnrkAvyW8iy2irA?pwd=m55d)  
   **提取码**：`m55d`
