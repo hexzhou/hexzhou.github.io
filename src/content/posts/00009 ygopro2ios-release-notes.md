@@ -10,8 +10,8 @@ category: 'iOS'
 ## 📦 IPA 下载
 
 ### 2025-07-04
-- **下载地址**：[百度网盘](https://pan.baidu.com/s/17MFTNuOgT5cUqvDVrSAHsg?pwd=3c4u)  
-  **提取码**：`3c4u`
+- **下载地址**：[百度网盘](https://pan.baidu.com/s/1XxjjC7LZWpiXX1sOJRJIwg?pwd=52qr)  
+  **提取码**：`52qr`
 - **修复内容**：
   - 修复换 SIDE 异常
 
