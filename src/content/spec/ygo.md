@@ -6,9 +6,6 @@
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1XxjjC7LZWpiXX1sOJRJIwg?pwd=52qr)  
   **提取码**：`52qr`
 
-- **下载地址2**：[取文件](https://quwenjian.cc/#/?code=OVBE5)  
-  **提取码**：`OVBE5
-
 - **修复内容**：
   - 修复换 SIDE 异常
 
