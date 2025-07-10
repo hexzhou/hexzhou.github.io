@@ -9,14 +9,13 @@ category: 'iOS'
 ---
 ## 📦 IPA 下载
 
-### 2025-07-04
+### 2025-07-10
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1AqTVj6rsJ-d7AaffqmP8RQ?pwd=bgpd)  
   **提取码**：`bgpd`
 - **修复内容**：
   - 修复动画效果，部分动画加快（如投骰子、投硬币等）
   - 修复 G3 换 SIDE 异常
   - 修复 MC 匹配进房间闪退异常
-
 
 ---
 
@@ -26,7 +25,6 @@ category: 'iOS'
 ### 2025-07-04
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1XxjjC7LZWpiXX1sOJRJIwg?pwd=52qr)  
   **提取码**：`52qr`
-
 - **修复内容**：
   - 修复换 SIDE 异常
 
