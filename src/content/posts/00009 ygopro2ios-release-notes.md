@@ -8,6 +8,13 @@ image: ''
 category: 'iOS'
 ---
 ## 📦 IPA 下载
+### 2025-07-28
+- **下载地址**：[百度网盘](https://pan.baidu.com/s/1q9L91ssfDe07KWxYQQwtBg?pwd=yg2u)  
+  **提取码**：`yg2u`
+- **更新内容**：
+  - 异形屏 UI 适配，UI 布局优化。包括以前的消息记录界面、工具栏位置、卡片搜索区域等等，都进行了一些优化。
+
+---
 
 ### 2025-07-23
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1gebCMbFMjPvM3e4sKinM3w?pwd=bhef)  
