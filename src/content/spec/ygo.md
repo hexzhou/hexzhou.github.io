@@ -2,8 +2,8 @@
 
 ## 📦 IPA 下载
 ### 2025-07-28
-- **下载地址**：[百度网盘](https://pan.baidu.com/s/1NaRhViuw339BJIaDWIxcxg?pwd=u4t7)  
-  **提取码**：`u4t7`
+- **下载地址**：[百度网盘](https://pan.baidu.com/s/1WoY0Z44_GPmxPrLdTEVXfQ?pwd=1944)  
+  **提取码**：`1944`
 - **更新内容**：
   - 异形屏 UI 适配，UI 布局优化。包括以前的消息记录界面、工具栏位置、卡片搜索区域等等，都进行了一些优化。
   - 修复被我干掉了的装备特效
