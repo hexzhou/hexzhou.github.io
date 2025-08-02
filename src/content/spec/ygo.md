@@ -1,7 +1,7 @@
 # KoishiPro2 iOS 个人修改版 Release Notes
 
 ## 📦 IPA 下载
-### 2025-07-28
+### 2025-08-03
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1wPX6qHSqq-GNQF9Rs0Bb2g?pwd=j2ng)  
   **提取码**：`j2ng`
 - **更新内容**：
