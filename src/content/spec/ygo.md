@@ -1,6 +1,15 @@
 # KoishiPro2 iOS 个人修改版 Release Notes
 
 ## 📦 IPA 下载
+### 2025-08-08
+- **下载地址**：[koishi.pro](https://koishi.pro/download/)  
+- **更新内容**：
+  - 优化“超先行卡”更新下载。  
+  - 添加“立绘资源“更新下载，目前卡图立绘有 10000+，建议首次自行导入完整包（最下方提供立绘资源下载），后续再更新下载，否则首次下载 10000+ 要很久。  
+  - 部分 UI 优化：如聊天记录信息字体加大，卡片搜索框加大，立绘特写完整展示等。  
+
+---
+
 ### 2025-08-03
 - **下载地址**：[百度网盘](https://pan.baidu.com/s/1wPX6qHSqq-GNQF9Rs0Bb2g?pwd=j2ng)  
   **提取码**：`j2ng`
@@ -104,8 +113,12 @@
 
 ## 🛠 Xcode 工程文件下载
 
-- [百度网盘](https://pan.baidu.com/s/1bvNmM07uGtjKE4Cr8Iumgg?pwd=g6ap)  
-  **提取码**：`g6ap`
+- [KoishiPro2-1.036.2-TCube-0808_src](http://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-TCube-0808_src.zip)  
+
+---
+
+## 🖼️ 立绘资源
+- [20250808 约250MB](http://cdntx.moecube.com/ex/koishipro2-hex/release/closeup_v1.zip)  
 
 ---
 
@@ -113,4 +126,3 @@
 
 - KoishiPro: [https://koishi.pro/download/](https://koishi.pro/download/)
 
----
