@@ -1,6 +1,16 @@
 # KoishiPro2 iOS 个人修改版 Release Notes
 
 ## 📦 IPA 下载
+### 2025-08-22
+- **下载地址**：[koishi.pro](https://koishi.pro/download/)  
+- **更新内容**：
+  - 增加iPad 用的分辨率：2100x1400；  
+  - 修复⚡️加速导致卡片无法选中的问题；  
+  - 增加滚动列表项间的间隔，美观点。  
+
+---
+
+
 ### 2025-08-08
 - **下载地址**：[koishi.pro](https://koishi.pro/download/)  
 - **更新内容**：
