@@ -26,7 +26,8 @@ category: 'iOS'
 
 ## 下载安装
 **IPA 下载地址**：  
-[下载链接](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_1.0.0.ipa)  
+[点我下载：约4MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_1.0.0.ipa)  
+
 
 > ⚠️ 注意：笔者只提供 IPA 包，请读者自行自签安装。
 
@@ -39,6 +40,7 @@ category: 'iOS'
 
 ## 功能特性
 - 🔍 **全文搜索**：支持中/日/英多语言卡名、密码、效果文本搜索
+- 📚 **文本复制**：支持复制卡片名称、密码、效果文本，卡图保存分享
 - 📜 **搜索历史**：自动保存近 5 条搜索记录，支持一键清空
 - 🎯 **高级筛选**：按卡片类型（怪兽/魔法/陷阱）、种族、属性等筛选
 - ⭐ **先行卡查看**：实时获取最新的先行卡片信息
