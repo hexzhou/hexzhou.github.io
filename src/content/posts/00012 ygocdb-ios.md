@@ -31,7 +31,15 @@ category: 'iOS'
 > ⚠️ 注意：笔者只提供 IPA 包，请读者自行自签安装。
 
 ## 预览图
-![](/images/0012-00.png)
+<p align="center">
+  <img src="/images/0012-00.png" width="200" alt="首页" />
+  <img src="/images/0012-04.png" width="200" alt="搜索" />
+  <img src="/images/0012-03.png" width="200" alt="筛选" />
+  <img src="/images/0012-01.png" width="200" alt="详情" />
+  <img src="/images/0012-02.png" width="200" alt="详情1" />
+  <img src="/images/0012-06.png" width="200" alt="先行卡" />
+  <img src="/images/0012-05.png" width="200" alt="设置" />
+</p>
 
 ## 功能特性
 - 🔍 **全文搜索**：支持中/日/英多语言卡名、密码、效果文本搜索
@@ -47,7 +55,7 @@ category: 'iOS'
 卡片数据来源于 [百鸽（ygocdb.com）](https://ygocdb.com)  
 
 ## 开源链接
-MoeNext://code.moenext.com/hex/ygocdb-ios  
+MoeNext: https://code.moenext.com/hex/ygocdb-ios  
 
 GitHub：https://github.com/hexzhou/ygocdb-ios  
 
