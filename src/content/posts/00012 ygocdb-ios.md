@@ -32,13 +32,9 @@ category: 'iOS'
 
 ## 预览图
 <p align="center">
-  <img src="/images/0012-00.png" width="200" alt="首页" />
-  <img src="/images/0012-04.png" width="200" alt="搜索" />
-  <img src="/images/0012-03.png" width="200" alt="筛选" />
-  <img src="/images/0012-01.png" width="200" alt="详情" />
-  <img src="/images/0012-02.png" width="200" alt="详情1" />
-  <img src="/images/0012-06.png" width="200" alt="先行卡" />
-  <img src="/images/0012-05.png" width="200" alt="设置" />
+  <img src="/images/0012-00.png" width="200" alt="首页" /><img src="/images/0012-04.png" width="200" alt="搜索" /><img src="/images/0012-03.png" width="200" alt="筛选" />
+  <img src="/images/0012-01.png" width="200" alt="详情" /><img src="/images/0012-02.png" width="200" alt="详情1" />
+  <img src="/images/0012-06.png" width="200" alt="先行卡" /><img src="/images/0012-05.png" width="200" alt="设置" />
 </p>
 
 ## 功能特性
