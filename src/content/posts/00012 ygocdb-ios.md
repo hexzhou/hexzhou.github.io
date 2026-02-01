@@ -26,7 +26,10 @@ category: 'iOS'
 
 ## 下载安装
 **IPA 下载地址**：  
-[点我下载：约4MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_1.0.0.ipa)  
+
+[V2.0 点我下载：约5MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_2.0.ipa)  
+
+[V1.0 点我下载：约4MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_1.0.0.ipa)  
 
 
 > ⚠️ 注意：笔者只提供 IPA 包，请读者自行自签安装。
