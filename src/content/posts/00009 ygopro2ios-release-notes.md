@@ -9,6 +9,17 @@ category: 'iOS'
 ---
 ## 📦 IPA 下载
 
+### 2026-02-12
+- **下载地址**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-TCube-2602.ipa)  
+- **更新内容**：
+  1. 自动检查超先行卡更新，标红提示
+  2. 更新卡片数据、超先行卡后自动重新加载数据，不再需要重启
+  3. 部分内存和网络优化
+  
+建议更新前备份一下自己的 ygopro2 文件夹。重新安装后复制迁移数据。  
+
+春节快乐，玩得开心！
+
 ### 2026-01-01
 - **下载地址**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-TCube-0101.ipa)  
 - **更新内容**：
