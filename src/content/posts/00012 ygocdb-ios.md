@@ -27,6 +27,8 @@ category: 'iOS'
 ## 下载安装
 **IPA 下载地址**：  
 
+[V3.0 点我下载：约5MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_3.0.ipa)  
+
 [V2.1 点我下载：约5MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_2.1.ipa)  
 
 [V2.0 点我下载：约5MB](https://cdntx.moecube.com/ex/koishipro2-hex/release/ygocdb-ios_2.0.ipa)  
@@ -45,14 +47,20 @@ category: 'iOS'
 
 ## 功能特性
 - 🔍 **全文搜索**：支持中/日/英多语言卡名、密码、效果文本搜索
-- 📚 **文本复制**：支持复制卡片名称、密码、效果文本，卡图保存分享
 - 📜 **搜索历史**：自动保存近 5 条搜索记录，支持一键清空
+- 📚 **文本复制**：支持复制卡片名称、密码、效果文本，卡图保存分享
 - 🎯 **高级筛选**：按卡片类型（怪兽/魔法/陷阱）、种族、属性等筛选
 - ⭐ **先行卡查看**：实时获取最新的先行卡片信息
 - 🖼️ **多语言卡图**：支持 YGOPRO/简中/日文/英文卡图切换
-- 📝 **多来源译名**：YGOPRO/简中/Master Duel/NWBBS/CNOCG 译名可选
+- 📝 **多来源名称**：YGOPRO/简中/Master Duel/NWBBS/CNOCG 名称可选
 - ⚡ **自动更新**：支持自动/手动更新策略，可配置更新间隔
 - 📵 **离线支持**：下载后可完全离线使用
+- 🃏 **卡组构建**：支持创建、编辑、从剪贴板导入/导出卡组
+- 📊 **概率计算**：内置起手概率计算器，支持自定义特定手牌组合概率分析
+- ⚖️ **Side 策略**：换 Side 策略辅助，记录换备方案
+- 🎲 **模拟抽卡**：卡组试抽功能 (Hand Test)
+- ⚔️ **对战模拟**：支持卡组对战模拟，记录主卡组与换 Side 后的表现
+- 🧮 **决斗计算器**：内置 LP 计算、骰子和硬币工具
 
 ## 数据来源
 卡片数据来源于 [百鸽（ygocdb.com）](https://ygocdb.com)  
