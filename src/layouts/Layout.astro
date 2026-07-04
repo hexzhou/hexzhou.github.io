@@ -73,9 +73,7 @@ const bannerOffset =
 ---
 
 <!DOCTYPE html>
-<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]"
-	  data-overlayscrollbars-initialize
->
+<html lang={siteLang} class="bg-[var(--page-bg)] transition text-[14px] md:text-[16px]">
 	<head>
 
 		<title>{pageTitle}</title>
@@ -148,9 +146,7 @@ const bannerOffset =
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
 	</head>
-	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
-		  data-overlayscrollbars-initialize
-	>
+	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}>
 		<ConfigCarrier></ConfigCarrier>
 		<slot />
 
@@ -195,13 +191,6 @@ const bannerOffset =
 </style>
 
 <script>
-import 'overlayscrollbars/overlayscrollbars.css';
-import {
-	OverlayScrollbars,
-	// ScrollbarsHidingPlugin,
-	// SizeObserverPlugin,
-	// ClickScrollPlugin
-} from 'overlayscrollbars';
 import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
 import {pathsEqual, url} from "../utils/url-utils";
 import {
@@ -286,35 +275,6 @@ function loadHue() {
 	setHue(getHue())
 }
 
-function initCustomScrollbar() {
-	const bodyElement = document.querySelector('body');
-	if (!bodyElement) return;
-	OverlayScrollbars(
-		// docs say that a initialization to the body element would affect native functionality like window.scrollTo
-		// but just leave it here for now
-		{
-			target: bodyElement,
-			cancel: {
-				nativeScrollbarsOverlaid: true,    // don't initialize the overlay scrollbar if there is a native one
-			}
-		}, {
-		scrollbars: {
-			theme: 'scrollbar-base scrollbar-auto py-1',
-			autoHide: 'move',
-			autoHideDelay: 500,
-			autoHideSuspend: false,
-		},
-	});
-	const katexElements = document.querySelectorAll('.katex-display') as NodeListOf<HTMLElement>;
-	katexElements.forEach((ele) => {
-		OverlayScrollbars(ele, {
-			scrollbars: {
-				theme: 'scrollbar-base scrollbar-auto py-1',
-			}
-		});
-	});
-}
-
 function showBanner() {
 	if (!siteConfig.banner.enable) return;
 	
@@ -331,7 +291,6 @@ function init() {
 	// disableAnimation()()		// TODO
 	loadTheme();
 	loadHue();
-	initCustomScrollbar();
 	showBanner();
 }
 
@@ -368,7 +327,6 @@ const setup = () => {
 			navbar.classList.add('navbar-hidden')
 		}
 	})
-	window.swup.hooks.on('content:replace', initCustomScrollbar)
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')

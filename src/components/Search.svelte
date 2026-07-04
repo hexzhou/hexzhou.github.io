@@ -1,16 +1,15 @@
 <script lang="ts">
-import type { SearchResult } from "@/global";
+import type { Pagefind, SearchResult } from "@/global";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import Icon from "@iconify/svelte";
 import { url } from "@utils/url-utils.ts";
-import { onMount } from "svelte";
 
 let keywordDesktop = "";
 let keywordMobile = "";
 let result: SearchResult[] = [];
-let isSearching = false;
-let pagefindLoaded = false;
+let pagefindPromise: Promise<Pagefind> | undefined;
+let searchVersion = 0;
 
 const fakeResult: SearchResult[] = [
 	{
@@ -46,20 +45,37 @@ const setPanelVisibility = (show: boolean, isDesktop: boolean): void => {
 	}
 };
 
+const loadPagefind = async (): Promise<Pagefind | null> => {
+	if (!import.meta.env.PROD) return null;
+	if (window.pagefind) return window.pagefind;
+
+	pagefindPromise ??= import(
+		/* @vite-ignore */ url("/pagefind/pagefind.js")
+	).then(async (pagefind: Pagefind) => {
+		await pagefind.options({ excerptLength: 20 });
+		pagefind.init();
+		window.pagefind = pagefind;
+		return pagefind;
+	});
+
+	return pagefindPromise;
+};
+
 const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
+	const version = ++searchVersion;
+
 	if (!keyword) {
 		setPanelVisibility(false, isDesktop);
 		result = [];
 		return;
 	}
 
-	isSearching = true;
-
 	try {
 		let searchResults: SearchResult[] = [];
+		const pagefind = await loadPagefind();
 
-		if (import.meta.env.PROD && pagefindLoaded) {
-			const response = await window.pagefind.search(keyword);
+		if (pagefind) {
+			const response = await pagefind.search(keyword);
 			searchResults = await Promise.all(
 				response.results.map((item) => item.data()),
 			);
@@ -67,26 +83,18 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 			searchResults = fakeResult;
 		}
 
+		if (version !== searchVersion) return;
+
 		result = searchResults;
 		setPanelVisibility(result.length > 0, isDesktop);
 	} catch (error) {
+		if (version !== searchVersion) return;
+
 		console.error("Search error:", error);
 		result = [];
 		setPanelVisibility(false, isDesktop);
-	} finally {
-		isSearching = false;
 	}
 };
-
-onMount(async () => {
-	pagefindLoaded = typeof window !== "undefined" && "pagefind" in window;
-
-	if (import.meta.env.DEV) {
-		console.log(
-			"Pagefind is not available in development mode. Using mock data.",
-		);
-	}
-});
 
 $: search(keywordDesktop, true);
 $: search(keywordMobile, false);
