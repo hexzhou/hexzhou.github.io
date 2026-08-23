@@ -79,6 +79,11 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa6-brands:bilibili",
 			url: "https://space.bilibili.com/278751",
 		},
+		{
+			name: "爱发电",
+			icon: "afdian",
+			url: "https://ifdian.net/a/ihexdev",
+		},
 	],
 };
 
