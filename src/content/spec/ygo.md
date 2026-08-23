@@ -1,5 +1,9 @@
 # KoishiPro2 iOS 个人修改版 Release Notes
 
+> **爱发电创作者认证**
+>
+> 本页面及 KoishiPro2 iOS 个人修改版由 **Hex（爱发电 ID：ihexdev）** 维护。本人已入驻爱发电，欢迎访问我的创作者主页：[https://ifdian.net/a/ihexdev](https://ifdian.net/a/ihexdev)。
+
 ## 📦 IPA 下载
 ### 2026-08-15
 - **下载地址**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2608.ipa)  
@@ -209,4 +213,3 @@ PS2：我个人测试是加速 1.5 倍效果比较好（不会太快也不会太
 ## 🙏 特别鸣谢
 
 - KoishiPro: [https://koishi.pro/download/](https://koishi.pro/download/)
-
