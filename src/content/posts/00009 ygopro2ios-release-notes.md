@@ -8,6 +8,15 @@ image: ''
 category: 'iOS'
 ---
 ## 📦 IPA 下载
+### 2026-09-10
+- **下载地址**：[koishi.pro](https://cdntx2.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2609.ipa)   
+- **更新内容**：  
+  1. 更换资源下载链接，修复卡片数据库下载失败、先行卡下载缓慢问题。   
+  2. 更新内置卡片资料至 2609。   
+   
+首次启动或更新后，游戏可能需要检查并同步卡牌资料，请保持网络连接。  
+建议更新前备份一下自己的 ygopro2 文件夹。重新安装后复制迁移数据。  
+  
 ### 2026-08-15
 - **下载地址**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2608.ipa)  
 - **更新内容**：  
