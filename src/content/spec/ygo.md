@@ -7,8 +7,8 @@
 ## 📦 IPA 下载
 ### 2026-09-13
 - **下载地址**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2609.1.ipa)  
-- **更新内容**： 
-KoishiPro2 iOS 2609.1更新 
+- **更新内容**：   
+KoishiPro2 iOS 2609.1更新   
 本次更新聚焦于录像自动保存、内存占用优化和移动端操作体验。  
 1. 新增自动保存录像选项，按场次和局号分别保存，保存失败时可重试。  
 2. 新增录像模式隐藏卡片详情选项，扩大观战画面。  
