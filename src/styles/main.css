@@ -1,6 +1,33 @@
 @tailwind components;
 
 @layer components {
+    .page-shell {
+        --layout-width: var(--page-width);
+        width: 100%;
+        max-width: var(--layout-width);
+    }
+
+    @media (min-width: 1440px) {
+        .page-shell {
+            --layout-width: 88rem;
+        }
+
+        /* Swup replaces #toc, so this also follows client-side navigation. */
+        body:has(#toc table-of-contents a) .page-shell {
+            --layout-width: 108rem;
+        }
+
+        body:has(#toc table-of-contents a) #main-grid {
+            grid-template-columns: 17.5rem minmax(0, 1fr) var(--toc-width);
+        }
+
+        body:has(#toc table-of-contents a) #toc-wrapper {
+            display: block;
+            grid-column: 3;
+            grid-row: 1;
+        }
+    }
+
     .card-base {
         @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition;
     }
