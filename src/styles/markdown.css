@@ -1,4 +1,25 @@
 .custom-md {
+    table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+
+        th, td {
+            min-width: 7rem;
+        }
+    }
+
+    .katex-display {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.5rem 0;
+    }
+
+    .katex-display > .katex {
+        width: max-content;
+        min-width: 100%;
+    }
+
     h1 {
         @apply text-3xl;
     }

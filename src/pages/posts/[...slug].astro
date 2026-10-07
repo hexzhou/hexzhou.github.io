@@ -33,7 +33,10 @@ const jsonLd = {
 	headline: entry.data.title,
 	description: entry.data.description || entry.data.title,
 	keywords: entry.data.tags,
-	author: {
+	author: entry.data.authors?.length ? entry.data.authors.map((name) => ({
+		"@type": "Person",
+		name,
+	})) : {
 		"@type": "Person",
 		name: profileConfig.name,
 		url: Astro.site,
@@ -104,7 +107,7 @@ const jsonLd = {
                 <Content />
             </Markdown>
 
-            {licenseConfig.enable && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
+            {licenseConfig.enable && entry.data.license !== false && <License title={entry.data.title} slug={entry.slug} pubDate={entry.data.published} class="mb-6 rounded-xl license-container onload-animation"></License>}
 
         </div>
     </div>
