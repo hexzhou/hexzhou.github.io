@@ -6,7 +6,8 @@
 
 ## 📦 IPA 下载
 ### 2026-09-13
-- **下载地址**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2609.1.ipa)  
+- **下载地址1**：[koishi.pro](https://cdn02.moecube.com:444/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2609.1.ipa)  
+- **下载地址2**：[koishi.pro](https://cdntx.moecube.com/ex/koishipro2-hex/release/KoishiPro2-1.036.2-Tulipa-2609.1.ipa)   
 - **更新内容**：   
 KoishiPro2 iOS 2609.1更新   
 本次更新聚焦于录像自动保存、内存占用优化和移动端操作体验。  
