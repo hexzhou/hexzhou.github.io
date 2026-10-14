@@ -3,7 +3,7 @@
   "compatibility_date": "2026-10-14",
   "workers_dev": true,
   "routes": [
-    { "pattern": "ihex.dev/*", "zone_name": "ihex.dev" }
+    { "pattern": "ihex.dev", "custom_domain": true }
   ],
   "assets": {
     "directory": "./dist",
