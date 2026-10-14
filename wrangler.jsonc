@@ -1,0 +1,12 @@
+{
+  "name": "ihex-blog",
+  "compatibility_date": "2026-10-14",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "ihex.dev/*", "zone_name": "ihex.dev" }
+  ],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
